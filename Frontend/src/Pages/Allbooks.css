@@ -54,7 +54,7 @@
     font-weight: 900;
 }
 
-.bookcard-category{
+.bookcard-publication{
     display: flex;
     flex-wrap: wrap;
     position: absolute;

@@ -5,13 +5,13 @@ const sendMail= async(email,subject,body)=>{
         const transporter = nodemailer.createTransport({
             service:"gmail",
             auth:{
-                user:'lavanyapadala666@gmail.com',
-                pass:"mptkmgeoydgbinsc"
+                user:'charankasa02@gmail.com',
+                pass:"yaynvybigbcnyyrd"
             }
         })
 
         await transporter.sendMail({
-            from:'lavanyapadala666@gmail.com',
+            from:'charankasa02@gmail.com',
             to:email,
             subject:subject,
             text:body
@@ -21,7 +21,7 @@ const sendMail= async(email,subject,body)=>{
 
 
     } catch (error) {
-        console.log(error,"Email not sent succesfully");
+        console.log(error,"Email not sent");
     }
     
 }

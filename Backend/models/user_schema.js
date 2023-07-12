@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const schema = mongoose.Schema({
+    userType:{
+        type : String,
+        required : true
+    },
     userName:{
         type:String,
         required:true,
@@ -19,6 +23,18 @@ const schema = mongoose.Schema({
         required:true,
         min:8
     },
+    // age:{
+    //     type: Number,
+    //     required :true
+    // },
+    gender:{
+        type: String,
+        required : true
+    },
+    // dob:{
+    //     type: Date,
+    //     required : true
+    // },
     mobileNumber:{
         type:String,
         required:true,

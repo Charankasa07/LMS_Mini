@@ -4,7 +4,7 @@ import "./MemberDashboard.css";
 
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import BookIcon from "@material-ui/icons/Book";
+// import BookIcon from "@material-ui/icons/Book";
 import HistoryIcon from "@material-ui/icons/History";
 import LocalLibraryIcon from "@material-ui/icons/LocalLibrary";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
@@ -13,7 +13,7 @@ import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
 import { IconButton } from "@material-ui/core";
 import { AuthContext } from "../../../Context/AuthContext";
 import axios from "axios";
-import moment from "moment";
+// import moment from "moment";
 
 function MemberDashboard() {
   const [active, setActive] = useState("profile");
@@ -27,7 +27,7 @@ function MemberDashboard() {
     const getMemberDetails = async () => {
       try {
         const response = await axios.get(
-          API_URL + "api/users/getuser/" + user._id
+          API_URL + "user/get_data/" + user._id
         );
         setMemberDetails(response.data);
       } catch (err) {
@@ -61,7 +61,7 @@ function MemberDashboard() {
         >
           <div className="dashboard-logo">
             <LibraryBooksIcon style={{ fontSize: 50 }} />
-            <p className="logo-name">LCMS</p>
+            <p className="logo-name">LMS</p>
           </div>
           <a
             href="#profile@member"
@@ -87,18 +87,7 @@ function MemberDashboard() {
           >
             <LocalLibraryIcon className="dashboard-option-icon" /> Active
           </a>
-          <a
-            href="#reservedbook@member"
-            className={`dashboard-option ${
-              active === "reserved" ? "clicked" : ""
-            }`}
-            onClick={() => {
-              setActive("reserved");
-              setSidebar(false);
-            }}
-          >
-            <BookIcon className="dashboard-option-icon" /> Reserved
-          </a>
+          
           <a
             href="#history@member"
             className={`dashboard-option ${
@@ -134,11 +123,11 @@ function MemberDashboard() {
                 alt=""
               ></img>
               <div className="user-info">
-                <p className="user-name">{memberDetails?.userFullName}</p>
+                <p className="user-name">{memberDetails?.userName}</p>
                 <p className="user-id">
                   {memberDetails?.userType === "Student"
-                    ? memberDetails?.admissionId
-                    : memberDetails?.employeeId}
+                    ? memberDetails?.clg_id
+                    : null }
                 </p>
                 <p className="user-email">{memberDetails?.email}</p>
                 <p className="user-phone">{memberDetails?.mobileNumber}</p>
@@ -149,14 +138,6 @@ function MemberDashboard() {
                 <div className="specific-left-top">
                   <p className="specific-left-topic">
                     <span style={{ fontSize: "18px" }}>
-                      <b>Age</b>
-                    </span>
-                    <span style={{ fontSize: "16px" }}>
-                      {memberDetails?.age}
-                    </span>
-                  </p>
-                  <p className="specific-left-topic">
-                    <span style={{ fontSize: "18px" }}>
                       <b>Gender</b>
                     </span>
                     <span style={{ fontSize: "16px" }}>
@@ -164,158 +145,10 @@ function MemberDashboard() {
                     </span>
                   </p>
                 </div>
-                <div className="specific-left-bottom">
-                  <p className="specific-left-topic">
-                    <span style={{ fontSize: "18px" }}>
-                      <b>DOB</b>
-                    </span>
-                    <span style={{ fontSize: "16px" }}>
-                      {memberDetails?.dob}
-                    </span>
-                  </p>
-                  <p className="specific-left-topic">
-                    <span style={{ fontSize: "18px" }}>
-                      <b>Address</b>
-                    </span>
-                    <span style={{ fontSize: "16px" }}>
-                      {memberDetails?.address}
-                    </span>
-                  </p>
-                </div>
-              </div>
-              <div className="specific-right">
-                <div className="specific-right-top">
-                  <p className="specific-right-topic">
-                    <b>Points</b>
-                  </p>
-                  <p
-                    style={{
-                      fontSize: "25px",
-                      fontWeight: "500",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginTop: "15px",
-                    }}
-                  >
-                    540
-                  </p>
-                </div>
-                <div className="dashboard-title-line"></div>
-                <div className="specific-right-bottom">
-                  <p className="specific-right-topic">
-                    <b>Rank</b>
-                  </p>
-                  <p
-                    style={{
-                      fontSize: "25px",
-                      fontWeight: "500",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginTop: "15px",
-                    }}
-                  >
-                    {memberDetails?.points}
-                  </p>
-                </div>
               </div>
             </div>
           </div>
 
-          <div className="member-activebooks-content" id="activebooks@member">
-            <p className="member-dashboard-heading">Issued</p>
-            <table className="activebooks-table">
-              <tr>
-                <th>S.No</th>
-                <th>Book-Name</th>
-                <th>From Date</th>
-                <th>To Date</th>
-                <th>Fine</th>
-              </tr>
-              {memberDetails?.activeTransactions
-                ?.filter((data) => {
-                  return data.transactionType === "Issued";
-                })
-                .map((data, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{data.bookName}</td>
-                      <td>{data.fromDate}</td>
-                      <td>{data.toDate}</td>
-                      <td>
-                        {Math.floor(
-                          (Date.parse(moment(new Date()).format("MM/DD/YYYY")) -
-                            Date.parse(data.toDate)) /
-                            86400000
-                        ) <= 0
-                          ? 0
-                          : Math.floor(
-                              (Date.parse(
-                                moment(new Date()).format("MM/DD/YYYY")
-                              ) -
-                                Date.parse(data.toDate)) /
-                                86400000
-                            ) * 10}
-                      </td>
-                    </tr>
-                  );
-                })}
-            </table>
-          </div>
-
-          <div
-            className="member-reservedbooks-content"
-            id="reservedbooks@member"
-          >
-            <p className="member-dashboard-heading">Reserved</p>
-            <table className="activebooks-table">
-              <tr>
-                <th>S.No</th>
-                <th>Book-Name</th>
-                <th>From</th>
-                <th>To</th>
-              </tr>
-              {memberDetails?.activeTransactions
-                ?.filter((data) => {
-                  return data.transactionType === "Reserved";
-                })
-                .map((data, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{data.bookName}</td>
-                      <td>{data.fromDate}</td>
-                      <td>{data.toDate}</td>
-                    </tr>
-                  );
-                })}
-            </table>
-          </div>
-          <div className="member-history-content" id="history@member">
-            <p className="member-dashboard-heading">History</p>
-            <table className="activebooks-table">
-              <tr>
-                <th>S.No</th>
-                <th>Book-Name</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Return Date</th>
-              </tr>
-              {memberDetails?.prevTransactions?.map((data, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{data.bookName}</td>
-                    <td>{data.fromDate}</td>
-                    <td>{data.toDate}</td>
-                    <td>{data.returnDate}</td>
-                  </tr>
-                );
-              })}
-            </table>
-          </div>
         </div>
       </div>
     </div>

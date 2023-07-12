@@ -25,7 +25,7 @@ function Header() {
             </Link>
             </div>
             <div className='nav-right'>
-                <input className='search-input' type='text' placeholder='Search a Book'/>
+                {/* <input className='search-input' type='text' placeholder='Search a Book'/> */}
                 <ul className={menutoggle ? "nav-options active" : "nav-options"}>
                     <li className="option" onClick={() => { closeMenu() }}>
                         <Link to='/'>

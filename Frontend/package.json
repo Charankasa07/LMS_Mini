@@ -17,8 +17,11 @@
     "react-datetime": "^3.0.4",
     "react-dom": "^17.0.2",
     "react-multi-select-component": "^4.0.3",
+    "react-redux": "^8.1.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "redux": "^4.2.1",
+    "redux-thunk": "^2.4.2",
     "semantic-ui-react": "^2.0.3",
     "web-vitals": "^1.0.1"
   },
@@ -28,7 +31,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy":"http://localhost:3000",
+  "proxy": "http://localhost:3000",
   "eslintConfig": {
     "extends": [
       "react-app",

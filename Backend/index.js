@@ -23,12 +23,13 @@ app.use('/org',org_routes)
 app.use('/user',user_routes)
 
 app.post('/login',async (req,res)=>{
+    console.log(req.body);
     // const {error,value} = loginvalidation(req.body)
     // if(error) return res.status(400).send(error.details[0].message)
-    console.log(req.body);
+    // console.log(req.body);
     var data = await org_schema.findOne({org_mail:req.body.email})
     if(!data) {
-        data = await user_schema.findOne({mail:req.body.email})
+        data = await user_schema.findOne({email:req.body.email})
         if(!data) return res.status(400).json("Account doesn't exist")
     }
 
@@ -37,8 +38,8 @@ app.post('/login',async (req,res)=>{
 
     var data1 = await org_schema.findOne({org_mail:data.email})
     if(!data1){
-        data1 = await user_schema.findOne({mail:data.email})
-        const token = jwt.sign({mail:data1.email},process.env.TOKEN_SECRET)
+        data1 = await user_schema.findOne({email:data.email})
+        const token = jwt.sign({email:data1.email},process.env.TOKEN_SECRET)
         return res.setHeader('auth-token',token).status(200).json(data1)
     }
     const token = jwt.sign({org_mail:data1.email},process.env.TOKEN_SECRET_ORG)

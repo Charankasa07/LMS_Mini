@@ -1,0 +1,91 @@
+.book-details-container{
+    /* margin: 20px; */
+    margin-top: 10px;
+    height: 100%;
+    width: 100%;
+    background-color: wheat;
+    padding-top: 50px;
+}
+
+.search-box{
+    display: flex;
+    justify-content: space-around;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    gap: 5px;
+    padding: 10px 0px;
+    /* background-color: aqua; */
+    /* align-items: center; */
+}
+.search-input{
+    width: 400px;
+}
+ .search-button{
+    border-radius: 10px;
+    color: black;
+    background-color: beige;
+    border-color: beige;
+ }
+
+ .book-filter{
+    width: 30px;
+    size: 30px;
+ }
+
+ .book-container{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+ }
+
+.book-card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffe7;
+    flex-direction: column;
+    width:250px;
+    height: 200px;
+    margin: 15px 0px;
+    box-shadow:  0 8px 8px -4px rgb(207, 154, 116);
+    border-radius: 5px;
+}
+
+.book-card:hover {
+    transform: scale(1.05);
+    box-shadow:  0 30px 30px -15px rgb(207, 154, 116);
+    transition: ease 0.5s;
+
+}
+
+.book-now{
+    display: none;
+    background-color: rgba(0, 0, 0, 0.646);
+    color:rgb(233,83,75);
+    border-radius: 10px;
+    border-color: black;
+    font-weight: bold;
+
+}
+
+.book-now:hover{
+    transform: scale(1.05);
+    transition: ease 1.1s;
+    color: rgb(32, 30, 30);
+    background-color: rgba(232, 136, 84, 0.701);
+    border-color:rgba(234, 169, 134, 0.701);
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.book-card:hover .book-now{
+    display: block;
+} 
+.book{
+    text-align: center;
+    margin: 2px;
+}
+.book-card h5{
+    font-weight: bolder;
+}

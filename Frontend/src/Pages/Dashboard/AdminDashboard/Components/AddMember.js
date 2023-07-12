@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import "../AdminDashboard.css"
 import axios from "axios"
-// import { Dropdown } from 'semantic-ui-react'
+import { Dropdown } from 'semantic-ui-react'
 // import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 // import moment from 'moment';
@@ -19,62 +19,64 @@ function AddMember() {
     const [password, setPassword] = useState(null)
     const [mobileNumber, setMobileNumber] = useState(null)
     const [branch, setbranch] = useState(null)
-    const [recentAddedMembers, setRecentAddedMembers] = useState([])
-    // const [userType, setUserType] = useState(null)
-    // const [gender, setGender] = useState(null)
+    // const [recentAddedMembers, setRecentAddedMembers] = useState([])
+    const [userType, setUserType] = useState(null)
+    const [gender, setGender] = useState(null)
     // const [age, setAge] = useState(null)
     // const [dob, setDob] = useState(null)
     // const [dobString, setDobString] = useState(null)
 
 
-    // const genderTypes = [
-    //     { value: "Male", text: "Male" },
-    //     { value: "Female", text: "Female" }
-    // ]
+    const genderTypes = [
+        { value: "Male", text: "Male" },
+        { value: "Female", text: "Female" }
+    ]
 
-    // const userTypes = [
-    //     { value: 'Staff', text: 'Staff' },
-    //     { value: 'Student', text: 'Student' }
-    // ]
+    const userTypes = [
+        { value: 'Staff', text: 'Staff' },
+        { value: 'Student', text: 'Student' }
+    ]
 
     //Add a Member
     const addMember = async (e) => {
         e.preventDefault()
+        console.log("hello");
         setIsLoading(true)
-        if (userName !== null && branch !== null && clg_id!== null && mobileNumber !== null && email !== null && password !== null) {
+        if (userName !== null && branch !== null && clg_id!== null && mobileNumber !== null && email !== null && password !== null && userType!== null && gender!== null) {
             const userData = {
-                // userType: userType,
+                userType: userType,
                 userName: userName,
                 clg_id: clg_id,
                 // employeeId: employeeId,
                 // age: age,
                 // dob: dobString,
-                // gender: gender,
+                gender: gender,
                 // address: address,
                 mobileNumber: mobileNumber,
                 branch : branch,
                 email: email,
                 password: password
             }
+            console.log("Hello");
             try {
-                const response = await axios.post(API_URL + "user/register", userData)
-                if (recentAddedMembers.length >= 5) {
-                    recentAddedMembers.splice(-1)
-                }
-                setRecentAddedMembers([response.data, ...recentAddedMembers])
-                setUserName(null)
+                await axios.post(API_URL + "user/register", userData)
+                // if (recentAddedMembers.length >= 5) {
+                //     recentAddedMembers.splice(-1)
+                // }
+                // setRecentAddedMembers([response.data, ...recentAddedMembers])
+                // setUserName(null)
                 // setUserType("Student")
-                setclg_id(null)
-                // setEmployeeId(null)
-                // setAddress(null)
-                setMobileNumber(null)
-                setEmail(null)
-                setPassword(null)
+                // setclg_id(null)
+                // // setEmployeeId(null)
+                // // setAddress(null)
+                // setMobileNumber(null)
+                // setEmail(null)
+                // setPassword(null)
                 // setGender(null)
-                setbranch(null)
-                // setDob(null)
-                // setDobString(null)
-                alert("Member Added")
+                // setbranch(null)
+                // // setDob(null)
+                // // setDobString(null)
+                // alert("Member Added")
             }
             catch (err) {
                 console.log(err)
@@ -87,26 +89,26 @@ function AddMember() {
     }
 
     //Fetch Members
-    useEffect(() => {
-        const getMembers = async () => {
-            try {
-                const response = await axios.get(API_URL + "api/users/allmembers")
-                const recentMembers = await response.data.slice(0, 5)
-                setRecentAddedMembers(recentMembers)
-            }
-            catch (err) {
-                console.log(err)
-            }
-        }
-        getMembers()
-    }, [API_URL])
+    // useEffect(() => {
+    //     const getMembers = async () => {
+    //         try {
+    //             const response = await axios.get(API_URL + "api/users/allmembers")
+    //             const recentMembers = await response.data.slice(0, 5)
+    //             setRecentAddedMembers(recentMembers)
+    //         }
+    //         catch (err) {
+    //             console.log(err)
+    //         }
+    //     }
+    //     getMembers()
+    // }, [API_URL])
 
     return (
         <div>
             <p className="dashboard-option-title">Add a Member</p>
             <div className="dashboard-title-line"></div>
             <form className="addmember-form" onSubmit={addMember}>
-                {/* <div className='semanticdropdown'>
+                <div className='semanticdropdown'>
                     <Dropdown
                         placeholder='User Type'
                         fluid
@@ -114,17 +116,17 @@ function AddMember() {
                         options={userTypes}
                         onChange={(event, data) => setUserType(data.value)}
                     />
-                </div> */}
+                </div>
                 <label className="addmember-form-label" htmlFor="userName">User Name<span className="required-field">*</span></label><br />
                 <input className="addmember-form-input" type="text" name="userName" value={userName} required onChange={(e) => setUserName(e.target.value)}></input><br />
 
-                <label className="addmember-form-label" htmlFor="clg_id" >{"CLg Id"}<span className="required-field">*</span></label><br />
+                <label className="addmember-form-label" htmlFor="clg_id" >Clg Id<span className="required-field">*</span></label><br />
                 <input className="addmember-form-input" type="text" value={clg_id}required onChange={(e) => setclg_id(e.target.value) }></input><br />
 
                 <label className="addmember-form-label" htmlFor="mobileNumber">Mobile Number<span className="required-field">*</span></label><br />
                 <input className="addmember-form-input" type="text" value={mobileNumber} required onChange={(e) => setMobileNumber(e.target.value)}></input><br />
 
-                {/* <label className="addmember-form-label" htmlFor="gender">Gender<span className="required-field">*</span></label><br />
+                <label className="addmember-form-label" htmlFor="gender">Gender<span className="required-field">*</span></label><br />
                 <div className='semanticdropdown'>
                     <Dropdown
                         placeholder='User Type'
@@ -134,7 +136,7 @@ function AddMember() {
                         options={genderTypes}
                         onChange={(event, data) => setGender(data.value)}
                     />
-                </div> */}
+                </div>
 
                 <label className="addmember-form-label" htmlFor="branch">Branch<span className="required-field">*</span></label><br />
                 <input className="addmember-form-input" type="text" value={branch} required onChange={(e) => setbranch(e.target.value)}></input><br />
@@ -160,28 +162,7 @@ function AddMember() {
                 <input className="addmember-submit" type="submit" value="SUBMIT" disabled={isLoading} ></input>
 
             </form>
-            <p className="dashboard-option-title">Add a Member</p>
-            <div className="dashboard-title-line"></div>
-            <table className='admindashboard-table'>
-                <tr>
-                    <th>S.No</th>
-                    <th>Member Type</th>
-                    <th>Member ID</th>
-                    <th>Member Name</th>
-                </tr>
-                {
-                    recentAddedMembers.map((member, index) => {
-                        return (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{member.userType}</td>
-                                <td>{member.userType === "Student" ? member.admissionId : member.employeeId}</td>
-                                <td>{member.userFullName}</td>
-                            </tr>
-                        )
-                    })
-                }
-            </table>
+            
         </div>
     )
 }

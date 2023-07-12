@@ -56,7 +56,7 @@ function Signin() {
                         <input className='signin-textbox' type="password" minLength='6'  placeholder="Enter Password" name="psw" required onChange={(e) => { setPassword(e.target.value) }} />
                         </div>
                     <button className="signin-button">Log In</button>
-                    <a className="forget-pass" href="#home">Forgot password?</a>
+                    <a className="forget-pass" href="/user/forgotpassword">Forgot password?</a>
                 </form>
                 <div className='signup-option'>
                     <p className="signup-question">Don't have an account?<Link className="link_class" to="/signup"> <h3 style={{fontFamily:"Oswald"}}>SignUp</h3></Link></p>

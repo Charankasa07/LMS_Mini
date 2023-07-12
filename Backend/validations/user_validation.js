@@ -7,7 +7,9 @@ const registerValidation=(data)=>{
         email:joi.string().required().email(),
         password:joi.string().required().min(8),
         branch:joi.string().required().min(3),
-        mobileNumber:joi.string().required().min(10)
+        mobileNumber:joi.string().required().min(10),
+        gender : joi.string().required(),
+        userType : joi.string().required()
     });
     
     return sch.validate(data)

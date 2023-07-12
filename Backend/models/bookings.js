@@ -16,11 +16,6 @@ const schema = mongoose.Schema({
         type:Date,
         default:Date.now()
     },
-    org:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'organization',
-        required:true
-    },
     isIssued:{
         type:Boolean,
         default:false

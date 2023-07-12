@@ -15,17 +15,17 @@ const bookings = require('../models/bookings')
 
 //uploading file into lib_uploads with org_name as filename
 
-// const in_storage = multer.diskStorage({
-//     destination : (req,file,cb)=>{
-//         cb(null,'lib_uploads')
-//     },
-//     filename: (req,file,cb)=>{
-//         cb(null,req.body.org_name+'.xlsx')
-//     }
-// })
-// const upload = multer({storage: in_storage})
+const in_storage = multer.diskStorage({
+    destination : (req,file,cb)=>{
+        cb(null,'lib_uploads')
+    },
+    filename: (req,file,cb)=>{
+        cb(null,req.body.org_name+'.xlsx')
+    }
+})
+const upload = multer({storage: in_storage})
 
-router.post('/create-org',async (req,res,next)=>{
+router.post('/create-org',upload.single('lib_file'),async (req,res,next)=>{
     
     const {error,value}= registervalidation(req.body)
     if(error) return res.status(400).send(error.details[0].message);
@@ -59,7 +59,8 @@ router.post('/create-org',async (req,res,next)=>{
             // await new_otp.save();
             const newdata =  await data.map(obj => ({ ...obj, org_name: org.org_name }))
             await books_schema.insertMany(newdata)
-            res.redirect(`/send-otp/${req.body.org_mail}`)
+            // res.redirect(`/send-otp/${req.body.org_mail}`)
+            
             // const token = jwt.sign({org_mail:org.org_email},process.env.TOKEN_SECRET_ORG)
             // res.setHeader('auth-token',token).send({status:"success",message:"Organization registered succesfully",token : token})
         } 
@@ -175,10 +176,13 @@ router.post('/add-book',org_verify,async (req,res)=>{
     }
 })
 
-router.get('/get/:org_name',async (req,res)=>{
+router.get('/get',async (req,res)=>{
     try {
-        const books = await books_schema.find({org_name:req.params.org_name})
+        const books = await books_schema.find()
         res.status(200).send(books)
+        // console.log(books);
+
+        console.log("Hi");
         
     } catch (error) {
         res.send(error)
